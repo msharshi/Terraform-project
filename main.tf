@@ -118,7 +118,7 @@ resource "aws_lb_target_group" "tg" {
   name     = "myTG"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.myvpc.id
+  vpc_id   = aws_vpc.main.id
 
   health_check {
     path = "/"
@@ -128,13 +128,13 @@ resource "aws_lb_target_group" "tg" {
 
 resource "aws_lb_target_group_attachment" "attach1" {
   target_group_arn = aws_lb_target_group.tg.arn
-  target_id        = aws_instance.webserver1.id
+  target_id        = aws_instance.web.id
   port             = 80
 }
 
 resource "aws_lb_target_group_attachment" "attach2" {
   target_group_arn = aws_lb_target_group.tg.arn
-  target_id        = aws_instance.webserver2.id
+  target_id        = aws_instance.web1.id
   port             = 80
 }
 
@@ -152,7 +152,6 @@ resource "aws_lb_listener" "listener" {
 output "loadbalancerdns" {
   value = aws_lb.myalb.dns_name
 }
-
 
 
 
